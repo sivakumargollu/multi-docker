@@ -1,0 +1,45 @@
+version: "3.7"
+services:
+  loadbalancer:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./loadbalancer
+    ports:
+    - 8080:80
+  mysqldb:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+    - 3306:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+    expose:
+      - 3306
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: './frontend'
+    ports:
+      - 9094:9094
+    volumes:
+      - ./:/src
+    environment:
+      - API_SERVER_HOST=server
+      - API_SERVER_PORT=8084
+      - API_SERVER_PATH=/api/userId
+  server :
+    build:
+      dockerfile: Dockerfile.dev
+      context: './service'
+    ports:
+     - 8084:8084
+    environment:
+      - MSSQL_PORT=3306
+      - MSSQL_HOST=mysqldb
+      - MSSQL_USER_NAME=root
+      - MSSQL_PASSWORD=mysql
+      - MSSQL_DATABASE=mysql
+      - MSSQL_NAME=mysql
+
+
