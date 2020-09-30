@@ -1,0 +1,13 @@
+sudo : required
+services : docker
+
+script:
+  - docker build -t sivakumargollu/elearnapi ./elearning-api
+  - docker build -t sivakumargollu/elearn-forntend ./elearning-forntend
+  - docker build -t sivakumargollu/elearn-loadbalancer ./elearning-loadbalancer
+#Docker login
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+#pushing images to docker
+  - docker push sivakumargollu/elearnapi
+  - docker push sivakumargollu/elearn-frontend
+  - docker push sivakumargollu/elearn-loadbalancer
