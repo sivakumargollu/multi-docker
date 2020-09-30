@@ -3,7 +3,7 @@ services : docker
 
 script:
   - docker build -t sivakumargollu/elearnapi ./elearning-api
-  - docker build -t sivakumargollu/elearn-frontend ./elearning-forntend
+  - docker build -t sivakumargollu/elearn-frontend ./elearning-frontend
   - docker build -t sivakumargollu/elearn-loadbalancer ./elearning-loadbalancer
 #Docker login
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
